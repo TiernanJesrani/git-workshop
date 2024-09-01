@@ -45,10 +45,10 @@ class DataFrame:
     def head(self, n: int = 5) -> DataFrame:
         """
         Returns a new DataFrame with the first n rows.
-
         :param n: Number of rows to return.
         :return: A new DataFrame with the first n rows.
         """
+        return(self.data[0:n-1])
         # TODO: Person 1 - Implement this function
 
 
@@ -59,6 +59,7 @@ class DataFrame:
         :param n: Number of rows to return.
         :return: A new DataFrame with the last n rows.
         """
+        return(self.data[-n:-1])
         # TODO: Person 2 - Implement this function
 
 
@@ -70,6 +71,8 @@ class DataFrame:
 
         :param series: The Series object to add as a new column.
         """
+
+
         # TODO: Person 1 - Implement this function
 
 
@@ -91,6 +94,7 @@ class DataFrame:
         :param column_name: The name of the column to retrieve.
         :return: The Series object for the specified column.
         """
+
         # TODO: Person 1 - Implement this function
 
 
@@ -182,6 +186,16 @@ class DataFrame:
         :param func: A function to apply to each element.
         :param column: Name of the column to apply the function to (optional).
         """
+        new_df = [row.copy() for row in self.data]
+
+        for column in new_df: 
+            for value in column: 
+                column[value] = func(column[value])
+        return (new_df)
+            
+
+
+
         # TODO: Person 1 & 2 - Implement this function
         # Either code together or have one person code and the other review
         # ...
