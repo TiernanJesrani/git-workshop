@@ -117,7 +117,19 @@ class DataFrame:
         # Either code together or have one person code and the other review
         # If coding together, use pair programming & co-author the commit (git commit -m "message" -m "Co-authored-by: name <email>")
         # If reviewing, leave comments on what you think can be improved
-
+        seen = set()
+        unique_rows = []
+        
+        rows = zip(*[series.data for series in self.data])
+        
+        for row in rows:
+            if row not in seen:
+                seen.add(row)
+                unique_rows.append(row)
+        
+        # Update the series data with unique rows
+        for series in self.data:
+            series.data = [row[self.data.index(series)] for row in unique_rows]
 
     def combine_columns(self, col1: str, col2: str, new_col: str, operation: callable) -> None:
         """
@@ -134,6 +146,19 @@ class DataFrame:
         # Either code together or have one person code and the other review
         # ...
 
+            # Retrieve the two series to combine
+        series1 = next(series for series in self.data if series.name == col1)
+        series2 = next(series for series in self.data if series.name == col2)
+        
+        if len(series1.data) != len(series2.data):
+            raise ValueError(f"Columns '{col1}' and '{col2}' must have the same length.")
+        
+        new_data = [operation(val1, val2) for val1, val2 in zip(series1.data, series2.data)]
+        new_series = Series(name=new_col, data=new_data)
+        
+        self.data.append(new_series)
+        self.columns.append(new_col)
+
 
     def concatenate_vertically(self, other: DataFrame) -> None:
         """
@@ -144,7 +169,8 @@ class DataFrame:
         :param other: Another DataFrame object to concatenate vertically.
         """
         # TODO: Person 1 - Implement this function
-
+        for i in range(len(self.data)) :
+            self.data[i].extend(other.data[i].data)
 
     def concatenate_horizontally(self, other: DataFrame) -> None:
         """
@@ -154,6 +180,8 @@ class DataFrame:
 
         :param other: Another DataFrame object to concatenate horizontally.
         """
+        self.data.extend(other.data)
+        self.columns.extend(other.data)
         # TODO: Person 2 - Implement this function
 
 
