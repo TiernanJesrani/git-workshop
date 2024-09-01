@@ -1,3 +1,4 @@
+from collections import Counter
 class Series:
     """
     A class to represent a Series, a one-dimensional column (array) with a name.
@@ -21,16 +22,19 @@ class Series:
 
     def sum(self) -> float:
         """Return the sum of the data in the series."""
+        return sum(self.data)
         # TODO: Person 3 - Implement this function
 
 
     def max(self) -> float:
         """Return the maximum value in the series."""
+        return max(self.data)
         # TODO: Person 4 - Implement this function
 
 
     def min(self) -> float:
         """Return the minimum value in the series."""
+        return min(self.data)
         # TODO: Person 3 - Implement this function
 
 
@@ -40,6 +44,14 @@ class Series:
 
     def mode(self) -> float:
         """Return the mode of the data in the series."""
+        data_counts = Counter(self.data)  # Count the frequency of each element
+        max_count = max(data_counts.values())  # Find the maximum frequency
+        modes = [k for k, v in data_counts.items() if v == max_count]  # Find all elements with max frequency
+    
+        if len(modes) == 1:
+            return modes[0]  # Return the single mode value
+        else:
+            return modes 
         # TODO: Person 3 - Implement this function
 
     def unique_val(self) -> list:
@@ -52,6 +64,8 @@ class Series:
 
         :param value: The specific value being checked.
         """
+
+        return value in self.data
         # TODO: Person 3 - Implement this function
 
     def replace(self, current_val: float, new_val: float) -> Series:
@@ -69,4 +83,7 @@ class Series:
         :param func: A function to apply to each element.
         :return: A new Series with the function applied.
         """
+
+        new_data = [func(x) for x in self.data]
+        return Series(new_data, self.name)
         # TODO: Person 3 - Implement this function
