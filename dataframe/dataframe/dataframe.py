@@ -82,6 +82,8 @@ class DataFrame:
 
         :param column_name: The name of the column to drop.
         """
+        self.columns.remove(column_name)
+        self.data = [item for item in self.data if item.name != column_name]
         # TODO: Person 2 - Implement this function
 
 
@@ -92,6 +94,9 @@ class DataFrame:
         :param column_name: The name of the column to retrieve.
         :return: The Series object for the specified column.
         """
+        for i in self.data:
+            if i.name == column_name:
+                return i
         # TODO: Person 1 - Implement this function
 
 
@@ -104,6 +109,9 @@ class DataFrame:
         :param column_name: The name of the column to set.
         :param values: A list of data to set for the specified column.
         """
+        for i in self.data:
+            if i.name == column_name:
+                i.data = values
         # TODO: Person 2 - Implement this function
 
 
@@ -163,6 +171,16 @@ class DataFrame:
 
         This operation is NOT done in-place.
         """
+        copy = self
+        copy_list = copy.data
+        for i in copy_list:
+            copy_column = i.data
+            for entry in copy_column:
+                if entry != entry:
+                    copy_column.remove(entry)
+            i.data = copy_column
+        copy.data = copy_list
+        return copy
         # TODO: Person 1 - Implement this function
 
     def replace_na(self, value: float) -> DataFrame:
@@ -172,6 +190,17 @@ class DataFrame:
         This operation is NOT done in-place.
 
         :param value: New value that replaces NaN."""
+
+        copy = self
+        copy_list = copy.data
+        for i in copy_list:
+            copy_column = i.data
+            for entry in copy_column:
+                if entry != entry:
+                    entry = value
+            i.data = copy_column
+        copy.data = copy_list
+        return copy
         # TODO: Person 2 - Implement this function
 
     def apply(self, func, column: str = None) -> DataFrame:
