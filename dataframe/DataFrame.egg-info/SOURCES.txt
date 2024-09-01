@@ -1,0 +1,8 @@
+setup.py
+DataFrame.egg-info/PKG-INFO
+DataFrame.egg-info/SOURCES.txt
+DataFrame.egg-info/dependency_links.txt
+DataFrame.egg-info/top_level.txt
+dataframe/__init__.py
+dataframe/dataframe.py
+dataframe/series.py

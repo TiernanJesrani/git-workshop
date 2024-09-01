@@ -26,6 +26,7 @@ class Series:
 
     def max(self) -> float:
         """Return the maximum value in the series."""
+        return max(self.data)
         # TODO: Person 4 - Implement this function
 
 
@@ -36,6 +37,7 @@ class Series:
 
     def mean(self) -> float:
         """Return the mean of the data in the series."""
+        return sum(self.data) / len(self.data)
         # TODO: Person 4 - Implement this function
 
     def mode(self) -> float:
@@ -44,6 +46,13 @@ class Series:
 
     def unique_val(self) -> list:
         """Return the unique values in the series."""
+        unique = []
+
+        for i in self.data:
+            if i not in unique:
+                unique.append(i)
+
+        return unique
         # TODO: Person 4 - Implement this function
 
     def contains(self, value: float) -> bool:
@@ -60,6 +69,11 @@ class Series:
         :param current_val: The current value. 
         :param new_value: The new value that will replace current value.
         """
+        copy = self
+        for i in copy.data:
+            if i == new_val:
+                i = current_val
+        return copy
         # TODO: Person 4 - Implement this function
 
     def apply(self, func) -> Series:
